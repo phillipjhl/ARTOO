@@ -1,0 +1,42 @@
+{
+  "name": "artoo",
+  "version": "0.1.0",
+  "description": "Home automation system. Python based RESTful API that will handle requests and communication between all local devices. Optimized for running on Rasberry Pi boards. Web UI for interaction with connected sub-systems.",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "build:client": "webpack",
+    "watch:client": "webpack --mode development --watch"
+  },
+  "author": {
+    "name": "Phillip Langland"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@babel/cli": "^7.5.5",
+    "@babel/polyfill": "^7.0.0",
+    "@babel/preset-react": "^7.0.0",
+    "babel-loader": "^8.0.2",
+    "bcrypt": "^3.0.1",
+    "bootstrap": "^4.3.1",
+    "esm": "^3.2.25",
+    "react": "^16.5.1",
+    "react-dom": "^16.5.1",
+    "react-router-dom": "^4.3.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.8.3",
+    "@babel/plugin-proposal-class-properties": "^7.5.5",
+    "@babel/preset-env": "^7.8.3",
+    "@babel/register": "^7.8.3",
+    "concurrently": "^4.0.1",
+    "css-loader": "^1.0.1",
+    "extract-text-webpack-plugin": "^4.0.0-beta.0",
+    "node-sass": "^4.12.0",
+    "nodemon": "^1.18.4",
+    "sass-loader": "^7.1.0",
+    "style-loader": "^0.23.1",
+    "webpack": "^4.37.0",
+    "webpack-cli": "^3.3.6"
+  }
+}
