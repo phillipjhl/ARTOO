@@ -6,6 +6,6 @@ export default class App extends Component {
   }
 
   render() {
-    return <p>Hello there, my old friend.</p>;
+    return <p>Hello there, my old friend...</p>;
   }
 }

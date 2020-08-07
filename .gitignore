@@ -2,5 +2,10 @@
 node_modules
 
 # Outputs
-static/
-app/static/*
+dist/*
+
+# Pycache
+__pycache__
+
+# Sql Lite
+db.sqlite3

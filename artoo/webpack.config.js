@@ -1,12 +1,12 @@
 const path = require("path");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
-const CLIENT_DEST = process.env.NODE_ENV === "production" ? path.join(__dirname, "./build/client/dist") : path.join(__dirname, "./app/static");
+const CLIENT_DEST = process.env.NODE_ENV === "production" ? path.join(__dirname, "./_build/client/assets") : path.join(__dirname, "./client/dist");
 
 const ASSET_PATH =
   process.env.NODE_ENV === "production" && process.env.ASSET_PATH
     ? process.env.ASSET_PATH
-    : '/app/static/';
+    : 'static/';
 
 module.exports = {
   entry: ["@babel/polyfill", "./client/index.js"],
@@ -47,8 +47,8 @@ module.exports = {
         use: {
           loader: "file-loader",
           options: {
-            publicPath: "/dist/images",
-            outputPath: "images"
+            publicPath: "static/images/",
+            outputPath: `${CLIENT_DEST}/images/`
           }
         }
       },
@@ -64,8 +64,8 @@ module.exports = {
         use: {
           loader: "file-loader",
           options: {
-            publicPath: "/dist/docs",
-            outputPath: "docs"
+            publicPath: "static/docs",
+            outputPath: `${CLIENT_DEST}/docs/`
           }
         }
       }

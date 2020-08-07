@@ -31,9 +31,12 @@ class DHT_SENSOR:
             
         except RuntimeError as error:
             print(error.args[0])
+            return error.args[0]
 
 # sensor = DHT_SENSOR("DHT22")
 
-# data = sensor.read_sensor()
+# while True:
+#     data = sensor.read_sensor()
+#     print(data)
+#     time.sleep(3.0)'
 
-# print(data)
