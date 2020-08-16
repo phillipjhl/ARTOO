@@ -4,6 +4,7 @@ import board
 import busio
 import time
 import adafruit_dht
+from datetime import datetime
 
 class DHT_SENSOR:
     def __init__(self, sensor_type = "DHT11", temp_format = "F"):
@@ -20,14 +21,15 @@ class DHT_SENSOR:
     def read_sensor(self):
         try:
             temp_c = self.dht.temperature
+            now = datetime.now()
             temp_f = temp_c * (9/5) + 32
             hum = self.dht.humidity
             print(
                 "Temp: {:.1f}F / {:.1f}C     Humidity: {}% ".format(temp_f, temp_c, hum))
             if self.temp_format == "C":
-                return [temp_c, hum]
+                return [temp_c, hum, now]
             else:
-                return [temp_f, hum]
+                return [temp_f, hum, now]
             
         except RuntimeError as error:
             print(error.args[0])
