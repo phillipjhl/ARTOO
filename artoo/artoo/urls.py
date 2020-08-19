@@ -21,5 +21,5 @@ from django.views.generic import TemplateView
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('artoo_api.urls')),
-    url(r'^(?!api)', TemplateView.as_view(template_name="index.html")),
+    url(r'^(?!api)(?!admin)', TemplateView.as_view(template_name="index.html")),
 ]

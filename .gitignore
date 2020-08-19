@@ -2,10 +2,14 @@
 node_modules
 
 # Outputs
-dist/*
+*/client/dist/*
 
 # Pycache
 __pycache__
 
 # Sql Lite
 db.sqlite3
+
+# Local Settings
+**/settings/dev.py
+**/settings/prod.py
