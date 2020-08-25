@@ -4,24 +4,35 @@ import {
   VictoryChart,
   VictoryTheme,
   VictoryClipContainer,
+  VictoryAxis,
 } from "victory";
-
-const data = [
-  { x: 1, y: 13000 },
-  { x: 2, y: 16500 },
-  { x: 3, y: 14250 },
-  { x: 4, y: 19000 },
-];
+import moment from "moment";
 
 export default function LineGraph(props) {
+  console.log(props);
+
+  let dataMap = props.data.map((d, i) => {
+    let date = moment(d.created_at).format("MM:SS");
+    let map = { x: date, y: parseFloat(d.values) };
+    return map;
+  });
+
   return (
-    <VictoryChart theme={VictoryTheme.material}>
+    <VictoryChart
+      domain={props.domain}
+      theme={VictoryTheme.material}
+      animate={{ duration: 500, onLoad: { duration: 500 } }}
+      padding={{ top: 40, bottom: 80, left: 40, right: 80 }}
+      width={600}
+      height={470}
+      scale={{ x: "time" }}
+    >
       <VictoryLine
-        data={data}
+        // labels={({ datum }) => `${datum.y}`}
+        data={dataMap}
         groupComponent={
           <VictoryClipContainer clipPadding={{ top: 5, right: 10 }} />
         }
-        animate={{ duration: 500, onLoad: { duration: 500 } }}
         style={{
           data: { stroke: "#c43a31" },
           parent: { border: "1px solid #ccc" },

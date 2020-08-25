@@ -1,9 +1,11 @@
 from sensors import dht_sensor
 from relays import hvac
-import config
 from time import sleep
+import config
+import requests
+from requests import HTTPError
 
-DHT22_1 = dht_sensor.DHT_SENSOR("DHT22")
+DHT22_1 = dht_sensor.DHT_SENSOR("DHT22", temp_format="C")
 SYSTEM_STATE: str = config.SYSTEM_STATE
 temp: float = config.temp
 humidity: float = config.humidity
@@ -17,15 +19,22 @@ ACTIVE_SLEEP_COUNTER: int = config.ACTIVE_SLEEP_COUNTER
 
 def read_sensor(sensor: dht_sensor.DHT_SENSOR):
     result = sensor.read_sensor()
-    print(result)
+    # print(result)
     global sensor_data
     global temp
     global humidity
     try:
-        temp = int(result[0])
-        hum = int(result[1])
+        temp = float(result[0])
+        hum = float(result[1])
         sensor_data = {"temp": temp, "humidity": hum}
-        return sensor_data
+        try:
+            print("Making requests")
+            response = requests.post("http://localhost:8000/api/sensors/data/", json={'name': "temperature", "values": temp, "sensor_id": 1})
+            response2 = requests.post("http://localhost:8000/api/sensors/data/", json={'name': "humidity", "values": hum, "sensor_id": 1})
+        except HTTPError as error:
+            print(error)
+        finally:
+            return sensor_data
     except:
         print("Error when reading sensor")
         sleep(2)
@@ -45,7 +54,7 @@ def main():
     global TEMP_GOAL
     global HEAT_SETTING
     global COOL_SETTING
-    check_delay = 5
+    check_delay = 300
     active_delay = 500
     global ACTIVE_SLEEP_LIMIT
     global ACTIVE_SLEEP_COUNTER
@@ -86,16 +95,16 @@ def main():
                         print("system already active")
                         print("System waiting: {}s", format(active_delay))
                         sleep(active_delay)
-                        active_sleep_counter += 1
-                        if active_sleep_counter > active_sleep_limit:
+                        ACTIVE_SLEEP_COUNTER += 1
+                        if ACTIVE_SLEEP_COUNTER > ACTIVE_SLEEP_LIMIT:
                             print("Limit of {} tries reached. System shutoff.",
-                                  format(active_sleep_limit))
+                                  format(ACTIVE_SLEEP_LIMIT))
                             SYSTEM_STATE = 'SHUTOFF'
                     else:
                         print("Verifying and activating system")
                         SYSTEM_STATE = 'ACTIVE'
                         # activate relays
-                        test_relays()
+                        test()
                         # real delay will be > 2 minutes
                         sleep(check_delay)
 
@@ -106,4 +115,5 @@ def main():
             sleep(check_delay)
 
 
-main()
+if (__name__ == '__main__'):
+    main()

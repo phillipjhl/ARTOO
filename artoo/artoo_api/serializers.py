@@ -14,7 +14,18 @@ class GroupSerializer(serializers.HyperlinkedModelSerializer):
         model = Group
         fields = ['url', 'name']
 
-class DeviceSerializer(serializers.HyperlinkedModelSerializer):
+class DeviceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Device
-        fields = ['name', 'location_id', 'device_type_id', 'created_at', 'updated_at']
+        fields = ['id', 'name', 'location_id', 'device_type_id', 'created_at', 'updated_at']
+        # fields = '__all__'
+
+class SensorSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Sensor
+        fields = ['id', 'name', 'device_id', 'sensor_type_id', 'created_at', 'updated_at']
+
+class SensorDataSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SensorData
+        fields = ['id', 'name', 'sensor_id', 'values', 'created_at', 'updated_at']

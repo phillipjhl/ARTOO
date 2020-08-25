@@ -11,6 +11,11 @@ django = "*"
 django-rest-framework = "*"
 adafruit-dht = "*"
 psycopg2 = "*"
+board = "*"
+adafruit-blinka = "*"
+adafruit-circuitpython-dht = "*"
+smbus = "*"
+requests = "*"
 
 [requires]
 python_version = "3.7"
