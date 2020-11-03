@@ -1,0 +1,43 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&display=swap');
+
+$theme-colors: (
+  "primary": #01d5bf,
+  "secondary": #02bbfe,
+  "contrast": #fff,
+  "muted": #71797c,
+  "danger": #a81c21,
+  "success": #4d7a0a,
+  "dark": #272e38,
+  "black": #272e38,
+  "black-transp": #000000a6,
+);
+
+$grey: #71797c;
+$body-color: #fff;
+
+// Background Colors
+
+$default-bg: #272e38;
+
+$body-bg: $default-bg;
+$card-bg: lighten($default-bg, 6);
+
+// Grid and Cards
+$grid-gutter-width: 60px; 
+
+$light-grey: #f9f9f9;
+$light: #71797c;
+$black: #000;
+$black-transp: #000000a6;
+
+$enable-shadows: true;
+
+$large-margin: 95px;
+
+$border-width: 3px;
+
+$font-family: 'Open Sans', sans-serif;
+
+.card {
+    box-shadow: 2px 2px 10px -10px #000;
+}

@@ -1,43 +1,36 @@
 import React from "react";
 import {
-  VictoryLine,
-  VictoryChart,
-  VictoryTheme,
-  VictoryClipContainer,
-  VictoryAxis,
-} from "victory";
+  ResponsiveContainer, LineChart, CartesianGrid,
+  XAxis, YAxis, Legend, Line, Tooltip, Brush
+} from "recharts";
 import moment from "moment";
 
 export default function LineGraph(props) {
   console.log(props);
 
   let dataMap = props.data.map((d, i) => {
-    let date = moment(d.created_at).format("MM:SS");
-    let map = { x: date, y: parseFloat(d.values) };
+    let date = moment(d.created_at).format("HH:MM:SS");
+    let map = { Time: date, [props.type]: parseFloat(d.values) };
     return map;
   });
 
   return (
-    <VictoryChart
-      domain={props.domain}
-      theme={VictoryTheme.material}
-      animate={{ duration: 500, onLoad: { duration: 500 } }}
-      padding={{ top: 40, bottom: 80, left: 40, right: 80 }}
-      width={600}
-      height={470}
-      scale={{ x: "time" }}
+    <ResponsiveContainer
+      width={"100%"}
+      height={props.height}
     >
-      <VictoryLine
-        // labels={({ datum }) => `${datum.y}`}
+      <LineChart
         data={dataMap}
-        groupComponent={
-          <VictoryClipContainer clipPadding={{ top: 5, right: 10 }} />
-        }
-        style={{
-          data: { stroke: "#c43a31" },
-          parent: { border: "1px solid #ccc" },
-        }}
-      />
-    </VictoryChart>
+      >
+        <CartesianGrid strokeDasharray="3 3" />
+        <XAxis dataKey="Time" />
+        <YAxis />
+        <Tooltip />
+        <Legend />
+        <Line dataKey={props.type} stroke="#02bbfe" />
+        {/* <Line type="monotone" dataKey="uv" stroke="#82ca9d" /> */}
+        {props.brush && <Brush />}
+      </LineChart>
+    </ResponsiveContainer>
   );
 }

@@ -1,0 +1,16 @@
+// import sass files
+@import "./scss/bootstrap";
+
+@import "./scss/sidenav";
+
+body {
+    font-family: $font-family;
+    color: $body-color;
+}
+
+  
+/* Style the main content */
+.main {
+  margin-left: 160px; /* Same as the width of the sidenav */
+  padding: 0px 10px;
+}

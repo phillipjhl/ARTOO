@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'django_filters'
 ]
 
 MIDDLEWARE = [
@@ -70,6 +71,11 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'artoo.wsgi.application'
 
+REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 100
+}
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases

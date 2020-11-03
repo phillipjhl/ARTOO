@@ -22,8 +22,9 @@
     "esm": "^3.2.25",
     "react": "^16.5.1",
     "react-dom": "^16.5.1",
+    "react-router": "^5.2.0",
     "react-router-dom": "^4.3.1",
-    "victory": "^35.0.8"
+    "recharts": "^1.8.5"
   },
   "devDependencies": {
     "@babel/core": "^7.8.3",

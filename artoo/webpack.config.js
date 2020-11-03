@@ -12,7 +12,7 @@ const ASSET_PATH =
     : "static/";
 
 module.exports = {
-  entry: ["@babel/polyfill", "./client/index.js", "./client/assets/app.scss"],
+  entry: ["@babel/polyfill", "./client/index.js", "./client/styles/app.scss"],
   output: {
     filename: "[name].js",
     path: CLIENT_DEST,
