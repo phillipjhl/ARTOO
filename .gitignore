@@ -17,3 +17,6 @@ db.sqlite3
 **/prod.py
 **/dev.py
 **/config/dev.js
+
+# VS Code
+.vscode/
