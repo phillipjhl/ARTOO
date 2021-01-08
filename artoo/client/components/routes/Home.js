@@ -1,5 +1,9 @@
 import React, { Component } from "react";
 import LineGraph from "../LineGraph";
+import { getAuth } from "../auth";
+import Card from "../Card";
+import { DateTime as DT } from "luxon";
+import { cToF } from "../utils"
 
 
 export default class Home extends Component {
@@ -9,22 +13,34 @@ export default class Home extends Component {
         this.state = {
             sensorData: {
                 temp: [],
-                humidity: [],
-            },
+                humidity: []
+            }
         };
 
         this.getData = this.getData.bind(this);
+        this.timeoutData = this.timeoutData.bind(this);
     }
 
     componentDidMount() {
-        this.getData();
-        setInterval(this.getData(), 180000);
+        let auth_token = getAuth();
+        this.getData(auth_token);
+
+        this.timeoutData();
     }
 
-    getData() {
-        fetch("/api/sensors/data/", {
+    componentWillUnmount() {
+        clearInterval(this.timeoutData)
+    }
+
+    timeoutData() {
+        setInterval(this.getData(), 180000);
+    };
+
+    getData(token) {
+        fetch("/api/sensors/data/?sensorId=1", {
             headers: {
                 Accept: "application/json",
+                Authorization: `Bearer ${token}`
             },
             method: "GET",
         })
@@ -32,12 +48,15 @@ export default class Home extends Component {
             .then((json) => {
                 console.log(json);
                 let results = json.results;
-                this.setState({
-                    sensorData: {
-                        temp: results.filter((a, b) => a.name == "temperature"),
-                        humidity: results.filter((a, b) => a.name == "humidity"),
-                    },
-                });
+                if (results) {
+                    // old way
+                    this.setState({
+                        sensorData: {
+                            temp: results.filter((a, b) => a.name == "temperature"),
+                            humidity: results.filter((a, b) => a.name == "humidity"),
+                        },
+                    });
+                }
             });
     }
 
@@ -45,34 +64,42 @@ export default class Home extends Component {
 
         return (
             <div className="card-columns p-2" >
-                {/* <div className="col-sm-4"> */}
-                    <div className="card">
-                        <div className="card-header">
-                            <h4>Temperature</h4>
-                        </div>
-                        <div className="card-body">
-                            <LineGraph
-                                type="Temperature"
-                                height={350}
-                                data={this.state.sensorData.temp}
-                            />
-                        </div>
+
+                <Card title={"Hello there, old friend."}>
+                    <div>Test</div>
+                </Card>
+
+                <div className="card">
+                    <div className="card-body">
+                        <h4 className="card-title">Temperature</h4>
+                        <LineGraph
+                            type="Temperature"
+                            height={350}
+                            xDomain={[DT.local().minus({ minutes: 45 }).toMillis(), DT.local().toMillis()]}
+                            yDomain={[20, 30]}
+                            data={this.state.sensorData.temp}
+                            unit={"\xB0C"}
+                        />
                     </div>
-                {/* </div> */}
-                {/* <div className="col-sm-4"> */}
-                    <div className="card">
-                        <div className="card-header">
-                            <h4>Humidity</h4>
-                        </div>
-                        <div className="card-body">
-                            <LineGraph
-                                type="Humidity"
-                                height={350}
-                                data={this.state.sensorData.humidity}
-                            />
-                        </div>
+                </div>
+
+                <div className="card">
+                    <div className="card-body">
+                        <h4 className="card-title">Humidity</h4>
+                        <LineGraph
+                            type="Humidity"
+                            height={350}
+                            xDomain={[DT.local().minus({ minutes: 45 }).toMillis(), DT.local().toMillis()]}
+                            yDomain={[30, 70]}
+                            data={this.state.sensorData.humidity}
+                            unit={"%"}
+                        />
                     </div>
-                {/* </div> */}
+                </div>
+
+                <Card title={"Hello there, old friend."}>
+                    <div style={{ height: "300px" }}>Test</div>
+                </Card>
             </div>
         )
     }

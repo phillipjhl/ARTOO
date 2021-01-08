@@ -13,6 +13,33 @@ This program is optimized for running on Rasberry Pi boards so the server can in
 
 React UI for interaction with connected sub-systems. UI will be accessable from main 7" ips screen on central RPI board. Since UI will be React based, this will lead to possible react-native apps as well as accessable from any browser on the local network.
 
+### Starting
+
+Install all client libraries.
+```bash
+$ cd artoo
+$ npm install
+```
+
+If you need to start client. Run:
+`$ npm run watch:client`
+
+Install all requirements.
+`$ pipenv install`
+
+Start shell within virtual environment.
+`$ pipenv shell`
+
+Start artoo engine.
+`(ARTOO) $ python artoo_engine/main.py`
+
+Run migrations.
+`$ python artoo/manage.py migrate --settings artoo.settings.dev`
+
+Start django server and pass in pass in dev settings for dev environment.
+`(ARTOO) $ python artoo/manage.py runserver --settings artoo.settings.dev`
+
+
 #### To Do In No Particular Order:
 
 - [ ] Alexa integration

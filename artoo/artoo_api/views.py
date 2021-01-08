@@ -4,7 +4,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 from django_filters.rest_framework import DjangoFilterBackend
 
-from rest_framework import viewsets
+from rest_framework import viewsets, filters
 from rest_framework.decorators import api_view, action
 from rest_framework.response import Response
 from rest_framework.parsers import JSONParser
@@ -28,6 +28,9 @@ class DeviceViewSet(viewsets.ModelViewSet):
     """
     queryset = Device.objects.all()
     serializer_class = DeviceSerializer
+    filter_backends = [filters.OrderingFilter]
+    ordering_fields = ['created_at', 'name']
+    ordering = ['-created_at']
 
 class SensorViewSet(viewsets.ModelViewSet):
     """
@@ -35,6 +38,9 @@ class SensorViewSet(viewsets.ModelViewSet):
     """
     queryset = Sensor.objects.all()
     serializer_class = SensorSerializer
+    filter_backends = [filters.OrderingFilter]
+    ordering_fields = ['created_at', 'name']
+    ordering = ['-created_at']
 
 class SensorDataViewSet(viewsets.ModelViewSet):
     """
@@ -42,9 +48,9 @@ class SensorDataViewSet(viewsets.ModelViewSet):
     """
     queryset = SensorData.objects.all()
     serializer_class = SensorDataSerializer
-    # filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
-    ordering_fields = ['created_at']
-    ordering = ['created_at']
+    filter_backends = [filters.OrderingFilter]
+    ordering_fields = ['created_at', 'name']
+    ordering = ['-created_at']
 
     # @action(detail=False)
     # def recent_data(self, request):

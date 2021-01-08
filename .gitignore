@@ -3,6 +3,7 @@ node_modules
 
 # Outputs
 */client/dist/*
+dist/*
 
 # Pycache
 __pycache__
@@ -13,3 +14,6 @@ db.sqlite3
 # Local Settings
 **/settings/dev.py
 **/settings/prod.py
+**/prod.py
+**/dev.py
+**/config/dev.js

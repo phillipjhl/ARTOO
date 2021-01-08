@@ -17,6 +17,7 @@ adafruit-circuitpython-dht = "*"
 smbus = "*"
 requests = "*"
 django-filter = "*"
+django-oauth-toolkit = "*"
 
 [requires]
 python_version = "3.7"
