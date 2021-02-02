@@ -18,6 +18,8 @@ smbus = "*"
 requests = "*"
 django-filter = "*"
 django-oauth-toolkit = "*"
+oauthlib = "*"
+requests-oauthlib = "*"
 
 [requires]
 python_version = "3.7"

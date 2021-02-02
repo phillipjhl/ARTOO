@@ -8,6 +8,9 @@ from rest_framework import viewsets, filters
 from rest_framework.decorators import api_view, action
 from rest_framework.response import Response
 from rest_framework.parsers import JSONParser
+from rest_framework.permissions import DjangoModelPermissions
+
+from oauth2_provider.contrib.rest_framework import TokenHasReadWriteScope, TokenHasScope
 
 from .serializers import DeviceSerializer, SensorSerializer, SensorDataSerializer
 from .models import Device, Sensor, SensorData
@@ -46,6 +49,9 @@ class SensorDataViewSet(viewsets.ModelViewSet):
     """
     CRUD on SensorData
     """
+
+    permission_classes = [TokenHasReadWriteScope]
+
     queryset = SensorData.objects.all()
     serializer_class = SensorDataSerializer
     filter_backends = [filters.OrderingFilter]
