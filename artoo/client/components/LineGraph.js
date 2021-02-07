@@ -14,15 +14,30 @@ export function LineGraph(props) {
       value = props.formatY(value);
     }
     let date = DT.fromISO(d.created_at).toMillis();
-    let map = { Time: date, [props.type]: parseFloat(value) };
+    let map = { Time: date, [props.type]: value };
     return map;
   });
 
-  console.log("data map", dataMap)
-
   const formatTimeTick = (unix) => {
     let dt = DT.fromMillis(unix);
-    return `${dt.hour}:${dt.minute}`;
+    let formated = dt.toFormat("HH:MM");
+    return formated;
+  }
+
+  const formatTimeLabel = (unix) => {
+    let dt = DT.fromMillis(unix);
+    let formated = dt.toLocaleString(DT.TIME_SIMPLE);
+    return `Time: ${formated}`;
+  }
+
+  function CustomTooltip({ payload, label, active }) {
+    if (active) {
+      return (
+        <div className="tooltip">
+
+        </div>
+      )
+    }
   }
 
   return (
@@ -34,11 +49,11 @@ export function LineGraph(props) {
         data={dataMap}
       >
         {/* <CartesianGrid strokeDasharray="5 5" /> */}
-        <XAxis domain={props.xDomain} scale="time" type="number" dataKey="Time" tickFormatter={formatTimeTick} allowDataOverflow={true}/>
+        <XAxis domain={props.xDomain} scale="time" type="number" dataKey="Time" tickFormatter={formatTimeTick} allowDataOverflow={props.brush ? false : true} />
         <YAxis domain={props.yDomain} unit={props.unit} />
-        <Tooltip />
-        <Legend />
-        <Line type="monotone" dataKey={props.type} stroke="#02bbfe" activeDot={true} animationDuration={500} animationBegin={100} allowDataOverflow={true}/>
+        <Tooltip labelFormatter={formatTimeLabel} labelStyle={{ color: "#999" }} wrapperStyle={{ backgroundColor: '#aaa', color: "444" }} />
+        {/* <Legend /> */}
+        <Line strokeWidth={2} type="monotone" dataKey={props.type} stroke="#02bbfe" activeDot={true} animationDuration={500} animationBegin={100} animationEasing={"ease-in"} />
         {/* <Line type="monotone" dataKey={props.type[1]} stroke="#82ca9d" /> */}
         {props.brush && <Brush />}
       </LineChart>
@@ -46,4 +61,4 @@ export function LineGraph(props) {
   );
 }
 
-export default memo(LineGraph, (prev, next) => { return prev.data === next.data });
+export default memo(LineGraph, (prev, next) => { return prev.data == next.data });
