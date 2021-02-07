@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import RadialNav from "./navigation/radialNav";
 import Home from "./routes/Home";
 import SideNav from "./SideNav";
 // import TopNav from "./topnav";
@@ -13,8 +14,9 @@ export default class App extends Component {
       <div className="vh-100 container-fluid">
         <Router>
           <>
-            <SideNav />
+            {/* <SideNav /> */}
             {/* <TopNav /> */}
+            <RadialNav />
             <div className="main h-100">
               <Switch>
                 <Route exact path="/" component={Home} />

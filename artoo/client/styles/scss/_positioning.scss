@@ -1,0 +1,16 @@
+.position {
+    &--absolute{
+        position: absolute;
+
+        &.--bottom {
+            bottom: 1rem;
+        }
+        &.--left {
+            left: 1rem;
+        }
+    }
+
+    &--relative {
+        position: relative;
+    }
+}

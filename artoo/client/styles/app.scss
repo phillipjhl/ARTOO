@@ -1,7 +1,9 @@
 // import sass files
 @import "./scss/bootstrap";
 
+@import "./scss/positioning";
 @import "./scss/sidenav";
+@import "./scss/radialnav";
 
 body {
     font-family: $font-family;
@@ -16,7 +18,7 @@ body {
   
 /* Style the main content */
 .main {
-  margin-left: 160px; /* Same as the width of the sidenav */
+  // margin-left: 160px; /* Same as the width of the sidenav */
   padding: 0px 10px;
 }
 
