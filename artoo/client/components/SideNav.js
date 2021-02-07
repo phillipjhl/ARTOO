@@ -4,11 +4,11 @@ export default function SideNav(props) {
 
     return (
         <nav className="sidebar bg-dark border-right border-primary">
-            <h1>ARTOO</h1>
+            {/* <h1>ARTOO</h1> */}
             <a href="#" title="Home"><i className="fa fa-2x fa-home"></i></a>
-            {/* <a href="#"><i className="fa fa-home"></i>Home</a>
-            <a href="#"><i className="fa fa-home"></i>Home</a>
-            <a href="#"><i className="fa fa-home"></i>Home</a> */}
+            <a href="/admin" target="_blank"><i className="fa fa-2x fa-cogs"></i></a>
+            {/* <a href="#"><i className="fa fa-home"></i>Home</a> */}
+            {/* <a href="#"><i className="fa fa-home"></i>Home</a> */}
         </nav>
 
     )

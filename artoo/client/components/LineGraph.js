@@ -9,12 +9,21 @@ export function LineGraph(props) {
   console.log(props, "Line Graph Props");
 
   let dataMap = props.data && props.data.map((d, i) => {
+    let value = d.values;
+    if (props.formatY) {
+      value = props.formatY(value);
+    }
     let date = DT.fromISO(d.created_at).toMillis();
-    let map = { Time: date, [props.type]: parseFloat(d.values) };
+    let map = { Time: date, [props.type]: parseFloat(value) };
     return map;
   });
 
   console.log("data map", dataMap)
+
+  const formatTimeTick = (unix) => {
+    let dt = DT.fromMillis(unix);
+    return `${dt.hour}:${dt.minute}`;
+  }
 
   return (
     <ResponsiveContainer
@@ -25,11 +34,11 @@ export function LineGraph(props) {
         data={dataMap}
       >
         {/* <CartesianGrid strokeDasharray="5 5" /> */}
-        <XAxis domain={props.xDomain} scale="time" type="number" dataKey="Time" tickFormatter={(unixTime) => DT.fromMillis(unixTime).toFormat(DT.TIME_SIMPLE)} />
+        <XAxis domain={props.xDomain} scale="time" type="number" dataKey="Time" tickFormatter={formatTimeTick} allowDataOverflow={true}/>
         <YAxis domain={props.yDomain} unit={props.unit} />
         <Tooltip />
         <Legend />
-        <Line type="monotone" dataKey={props.type} stroke="#02bbfe" activeDot={true} animationDuration={500} animationBegin={100} />
+        <Line type="monotone" dataKey={props.type} stroke="#02bbfe" activeDot={true} animationDuration={500} animationBegin={100} allowDataOverflow={true}/>
         {/* <Line type="monotone" dataKey={props.type[1]} stroke="#82ca9d" /> */}
         {props.brush && <Brush />}
       </LineChart>

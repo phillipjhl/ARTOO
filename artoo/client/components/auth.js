@@ -4,6 +4,10 @@ export function setAuth(token = "") {
     localStorage.setItem('auth_token', AUTH_TOKEN || token);
 }
 
+export function resetAuth() {
+    localStorage.removeItem('auth_token');
+}
+
 let auth_token = "";
 
 export function getAuth() {

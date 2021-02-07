@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import LineGraph from "../LineGraph";
-import { getAuth } from "../auth";
+import { getAuth, resetAuth } from "../auth";
 import Card from "../Card";
 import { DateTime as DT } from "luxon";
 import { cToF } from "../utils"
@@ -14,7 +14,8 @@ export default class Home extends Component {
             sensorData: {
                 temp: [],
                 humidity: []
-            }
+            },
+            authToken: getAuth()
         };
 
         this.getData = this.getData.bind(this);
@@ -22,7 +23,7 @@ export default class Home extends Component {
     }
 
     componentDidMount() {
-        let auth_token = getAuth();
+        let auth_token = this.state.authToken;
         this.getData(auth_token);
 
         this.timeoutData();
@@ -37,16 +38,27 @@ export default class Home extends Component {
     };
 
     getData(token) {
+        let auth = token || this.state.authToken;
         fetch("/api/sensors/data/?sensorId=1", {
             headers: {
                 Accept: "application/json",
-                Authorization: `Bearer ${token}`
+                Authorization: `Bearer ${auth}`
             },
             method: "GET",
         })
-            .then((resp) => resp.json())
+            .then((resp) => {
+                switch (resp.status) {
+                    case 401:
+                        resetAuth();
+                        throw ("UNAUTHORIZED");
+                    case 403:
+                        throw ("FORBIDDEN");
+                    default:
+                        return resp.json();
+                }
+            })
             .then((json) => {
-                console.log(json);
+                // console.log(json);
                 let results = json.results;
                 if (results) {
                     // old way
@@ -57,10 +69,16 @@ export default class Home extends Component {
                         },
                     });
                 }
-            });
+            })
+            .catch(error => console.error(error));
     }
 
     render() {
+        let now = DT.local();
+        let nowInMillis = now.toMillis();
+        let past = now.minus({ hours: 2 }).toMillis()
+
+        let xDomain = [past, nowInMillis];
 
         return (
             <div className="card-columns p-2" >
@@ -75,10 +93,11 @@ export default class Home extends Component {
                         <LineGraph
                             type="Temperature"
                             height={350}
-                            xDomain={[DT.local().minus({ minutes: 45 }).toMillis(), DT.local().toMillis()]}
-                            yDomain={[20, 30]}
+                            xDomain={xDomain}
+                            yDomain={[64, 76]}
                             data={this.state.sensorData.temp}
-                            unit={"\xB0C"}
+                            unit={"\xB0F"}
+                            formatY={(temp) => cToF(temp)}
                         />
                     </div>
                 </div>
@@ -89,17 +108,13 @@ export default class Home extends Component {
                         <LineGraph
                             type="Humidity"
                             height={350}
-                            xDomain={[DT.local().minus({ minutes: 45 }).toMillis(), DT.local().toMillis()]}
+                            xDomain={xDomain}
                             yDomain={[30, 70]}
                             data={this.state.sensorData.humidity}
                             unit={"%"}
                         />
                     </div>
                 </div>
-
-                <Card title={"Hello there, old friend."}>
-                    <div style={{ height: "300px" }}>Test</div>
-                </Card>
             </div>
         )
     }
