@@ -24,7 +24,11 @@ BASE_DIR = Path(__file__).resolve(strict=True).parent.parent.parent
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['.artoo.com', '127.0.0.1', 'localhost']
+
+CSRF_TRUSTED_ORIGINS=['.artoo.com']
+
+CSRF_COOKIE_DOMAIN='.artoo.com'
 
 
 # Application definition
