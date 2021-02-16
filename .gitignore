@@ -4,6 +4,7 @@ node_modules
 # Outputs
 */client/dist/*
 dist/*
+*/static/*
 
 # Pycache
 __pycache__
