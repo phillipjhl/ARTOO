@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import LineGraph from "../LineGraph";
-import { getAuth, resetAuth } from "../auth";
+import { getAuth, refreshToken, resetAuth } from "../auth";
 import Card from "../Card";
 import { DateTime as DT } from "luxon";
 import { cToF } from "../utils"
@@ -46,13 +46,15 @@ export default class Home extends Component {
             },
             method: "GET",
         })
-            .then((resp) => {
+            .then(async (resp) => {
                 switch (resp.status) {
                     case 401:
                         resetAuth();
                         throw ("UNAUTHORIZED");
                     case 403:
-                        throw ("FORBIDDEN");
+                        // refresh token
+                        let accessToken = await refreshToken();
+                        this.getData(accessToken);
                     default:
                         return resp.json();
                 }
