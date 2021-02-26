@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import LineGraph from "../LineGraph";
-import { getAuth, refreshToken, resetAuth } from "../auth";
+import { getAuth, refreshToken, resetAuth } from "../../services/auth";
 import Card from "../Card";
 import { DateTime as DT } from "luxon";
 import { cToF } from "../utils"
@@ -47,14 +47,17 @@ export default class Home extends Component {
             method: "GET",
         })
             .then(async (resp) => {
+                let accessToken;
                 switch (resp.status) {
-                    case 401:
+                    case 401 || 403:
                         resetAuth();
-                        throw ("UNAUTHORIZED");
-                    case 403:
                         // refresh token
-                        let accessToken = await refreshToken();
-                        this.getData(accessToken);
+                        try {
+                            accessToken = await refreshToken();
+                            this.getData(accessToken);
+                        } catch (error) {
+                            throw error
+                        }
                     default:
                         return resp.json();
                 }
@@ -83,38 +86,38 @@ export default class Home extends Component {
         let xDomain = [past, nowInMillis];
 
         return (
-            <div className="card-columns p-2" >
+            <div className="row row-cols-1 row-cols-md-3" >
 
-                <Card title={"Hello there, old friend."}>
-                    <div>Test</div>
-                </Card>
-
-                <div className="card">
-                    <div className="card-body">
-                        <h4 className="card-title">Temperature</h4>
-                        <LineGraph
-                            type="Temperature"
-                            height={350}
-                            xDomain={xDomain}
-                            yDomain={[64, 76]}
-                            data={this.state.sensorData.temp}
-                            unit={"\xB0F"}
-                            formatY={(temp) => cToF(temp)}
-                        />
+                <div className="col my-4">
+                    <div className="card">
+                        <div className="card-body">
+                            <h4 className="card-title">Temperature</h4>
+                            <LineGraph
+                                type="Temperature"
+                                height={350}
+                                xDomain={xDomain}
+                                yDomain={[64, 76]}
+                                data={this.state.sensorData.temp}
+                                unit={"\xB0F"}
+                                formatY={(temp) => cToF(temp)}
+                            />
+                        </div>
                     </div>
                 </div>
 
-                <div className="card">
-                    <div className="card-body">
-                        <h4 className="card-title">Humidity</h4>
-                        <LineGraph
-                            type="Humidity"
-                            height={350}
-                            xDomain={xDomain}
-                            yDomain={[30, 70]}
-                            data={this.state.sensorData.humidity}
-                            unit={"%"}
-                        />
+                <div className="col my-4 ">
+                    <div className="card">
+                        <div className="card-body">
+                            <h4 className="card-title">Humidity</h4>
+                            <LineGraph
+                                type="Humidity"
+                                height={350}
+                                xDomain={xDomain}
+                                yDomain={[30, 70]}
+                                data={this.state.sensorData.humidity}
+                                unit={"%"}
+                            />
+                        </div>
                     </div>
                 </div>
             </div>

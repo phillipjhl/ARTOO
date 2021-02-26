@@ -6,7 +6,8 @@
   "scripts": {
     "test": "jest",
     "build:client": "webpack",
-    "watch:client": "webpack --mode development --watch"
+    "watch:client": "webpack --mode development --watch",
+    "build-and-deploy": "webpack && python manage.py collectstatic --noinput && systemctl restart gunicorn"
   },
   "author": {
     "name": "Phillip Langland"
