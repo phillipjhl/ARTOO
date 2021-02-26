@@ -69,3 +69,8 @@ class SensorDataViewSet(viewsets.ModelViewSet):
 
     #     serializer = self.get_serializer(recent_data, many=True)
     #     return Response(serializer.data)
+
+def room(request, room_name):
+    return render(request, 'chat/room.html', {
+        'room_name': room_name
+    })

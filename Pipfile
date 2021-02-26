@@ -8,7 +8,7 @@ pylint = "*"
 
 [packages]
 django = "*"
-django-rest-framework = "*"
+django-rest-framework = "3.12.0"
 adafruit-dht = "*"
 psycopg2 = "*"
 board = "*"
@@ -20,6 +20,7 @@ django-filter = "*"
 django-oauth-toolkit = "*"
 oauthlib = "*"
 requests-oauthlib = "*"
+channels = "*"
 
 [requires]
 python_version = "3.7"

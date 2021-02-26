@@ -34,6 +34,7 @@ CSRF_COOKIE_DOMAIN='.artoo.com'
 # Application definition
 
 INSTALLED_APPS = [
+    'channels',
     'artoo_api.apps.ArtooApiConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -82,6 +83,9 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'artoo.wsgi.application'
+
+# Channels
+ASGI_APPLICATION = 'artoo.asgi.application'
 
 REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],

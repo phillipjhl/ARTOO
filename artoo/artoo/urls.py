@@ -18,9 +18,12 @@ from django.urls import path, include
 from django.conf.urls import url
 from django.views.generic import TemplateView
 
+from artoo_api import views
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('artoo_api.urls')),
     path('oauth2/', include('oauth2_provider.urls', namespace='oauth2_provider')),
     url(r'^(?!api)(?!admin)', TemplateView.as_view(template_name="index.html")),
+    path('<str:room_name>/', views.room, name='room'),
 ]
