@@ -2,7 +2,7 @@ import React from "react";
 
 export default function RadialNav(props) {
     return (
-        <div className="radial-nav position--absolute --bottom --left">
+        <a className="radial-nav position--absolute --bottom --left" role="button">
             <div className="rounded position--relative radial-block">
                 <span className="radial-btn fa-stack fa-fw fa-3x" style={{ verticalAlign: "top" }}>
                     <i className="fa fa-stack-2x fa-circle text-dark"></i>
@@ -33,6 +33,6 @@ export default function RadialNav(props) {
                     </div>
                 </div>
             </div>
-        </div>
+        </a>
     )
 }

@@ -34,7 +34,7 @@ export default class Home extends Component {
     }
 
     timeoutData() {
-        setInterval(this.getData(), 180000);
+        setInterval(this.getData, 180000);
     };
 
     getData(token) {

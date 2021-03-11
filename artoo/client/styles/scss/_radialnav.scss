@@ -3,7 +3,7 @@
     transition: all .3s ease;
     padding: 3rem 3rem 0 0;
 
-    &:hover, &:focus {
+    &:hover, &:focus, &:active, &:focus-within, &:target, &:visited {
         transition: all .5s ease-in;
 
         .radial-list {
