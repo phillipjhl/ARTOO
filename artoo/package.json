@@ -1,6 +1,6 @@
 {
   "name": "artoo",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Home automation system. Python based RESTful API that will handle requests and communication between all local devices. Optimized for running on Rasberry Pi boards. Web UI for interaction with connected sub-systems.",
   "main": "index.js",
   "scripts": {
